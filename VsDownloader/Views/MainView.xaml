@@ -1,0 +1,42 @@
+﻿<Window
+    x:Class="VsDownloader.Views.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:VsDownloader.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:VsDownloader.ViewModels"
+    Title="MainView"
+    Width="480"
+    Height="640"
+    mc:Ignorable="d">
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Path=FirstCommand, Mode=OneTime}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock FontWeight="Bold" Text="{Binding Path=Page.Title, Mode=OneWay, FallbackValue='Title'}" />
+        <TextBlock
+            Grid.Row="1"
+            Text="{Binding Path=Page.Description, Mode=OneWay, FallbackValue='Description'}"
+            TextWrapping="Wrap" />
+        <ContentPresenter Grid.Row="2" Content="{Binding Path=PageView, Mode=OneWay}" />
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <Button Command="{Binding Path=PreviousCommand, Mode=OneTime}" Content="Back" />
+            <Button Command="{Binding Path=NextCommand, Mode=OneTime}" Content="Next" />
+            <Button Content="Finish" />
+            <Button Content="Cancel" />
+        </StackPanel>
+    </Grid>
+</Window>

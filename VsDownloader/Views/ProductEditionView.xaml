@@ -15,7 +15,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
-        <ListBox ItemsSource="{Binding Path=ProductEditions, Mode=OneWay}">
+        <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding Path=ProductEditions, Mode=OneWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <RadioButton GroupName="Editions" IsChecked="{Binding Path=IsSelected, Mode=TwoWay}">

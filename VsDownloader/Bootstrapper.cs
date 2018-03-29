@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System.Collections.Generic;
 using VsDownloader.Models;
+using System;
 
 namespace VsDownloader
 {
@@ -53,6 +54,8 @@ namespace VsDownloader
             get { return _languages; }
             private set { _languages = value; }
         }
+
+       
 
         public IList<WorkloadModel> Workloads
         {
@@ -124,6 +127,18 @@ namespace VsDownloader
                 workloads.Add(workload);
             }
             Workloads = workloads;
+        }
+
+        public IList<SectionModel> GetSections(WorkloadModel workload)
+        {
+            var web = new HtmlWeb();
+            var document = web.Load(workload.Url);
+
+            var sections = new List<SectionModel>();
+
+            var sectionNodes = document.DocumentNode.SelectNodes(".//h2[string-length(@id) > 0]/following-sibling::p/strong");
+
+            return sections;
         }
     }
 }

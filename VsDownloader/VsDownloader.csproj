@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Models\LanguageModel.cs" />
+    <Compile Include="Models\SectionModel.cs" />
     <Compile Include="Models\ProductEditionModel.cs" />
     <Compile Include="Models\WorkloadModel.cs" />
     <Compile Include="Models\ComponentModel.cs" />

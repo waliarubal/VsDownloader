@@ -19,7 +19,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
-        <ListBox ItemsSource="{Binding Path=Languages, Mode=OneWay}">
+        <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding Path=Languages, Mode=OneWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox IsChecked="{Binding Path=IsSelected, Mode=TwoWay}">

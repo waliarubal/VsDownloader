@@ -41,7 +41,6 @@ namespace VsDownloader.Models
             set { Set(nameof(Version), ref _version, value); }
         }
 
-
         public bool IsSelected
         {
             get { return _isSelected; }

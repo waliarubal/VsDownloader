@@ -69,6 +69,7 @@ namespace VsDownloader.ViewModels
         void SetSelectedWorkload(WorkloadModel workload)
         {
             SelectedWorkload = workload;
+            SelectedWorkload.GetSections();
         }
 
     }

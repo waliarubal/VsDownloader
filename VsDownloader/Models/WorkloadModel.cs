@@ -1,4 +1,5 @@
 ﻿using NullVoidCreations.WpfHelpers.Base;
+using System.Collections.Generic;
 
 namespace VsDownloader.Models
 {
@@ -6,6 +7,12 @@ namespace VsDownloader.Models
     {
         string _bootstrapperUrl, _name, _id, _description;
         bool _isSelected;
+        IList<SectionModel> _sections;
+
+        public WorkloadModel()
+        {
+            _sections = new List<SectionModel>();
+        }
 
         public string Url
         {
@@ -31,11 +38,25 @@ namespace VsDownloader.Models
             set { Set(nameof(Description), ref _description, value); }
         }
 
+        public IList<SectionModel> Sections
+        {
+            get { return _sections; }
+            private set { Set(nameof(Sections), ref _sections, value); }
+        }
+
 
         public bool IsSelected
         {
             get { return _isSelected; }
             set { Set(nameof(IsSelected), ref _isSelected, value); }
+        }
+
+        public void GetSections()
+        {
+            if (Sections.Count > 0)
+                return;
+
+            Sections = Bootstrapper.Instance.GetSections(this);
         }
     }
 }

@@ -73,6 +73,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Models\LanguageModel.cs" />
     <Compile Include="Models\ProductEditionModel.cs" />
     <Compile Include="Models\WorkloadModel.cs" />

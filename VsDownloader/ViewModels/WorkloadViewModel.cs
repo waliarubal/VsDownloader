@@ -1,8 +1,5 @@
-﻿using HtmlAgilityPack;
-using NullVoidCreations.WpfHelpers.Base;
-using NullVoidCreations.WpfHelpers.Commands;
+﻿using NullVoidCreations.WpfHelpers.Commands;
 using System.Collections.Generic;
-using System.Web;
 using System.Windows.Input;
 using VsDownloader.Models;
 
@@ -13,21 +10,26 @@ namespace VsDownloader.ViewModels
         const string TITLE = "Workload";
         const string DESCRIPTION = "Select workload which you want to download.";
 
-        IList<WorkloadModel> _workloads;
+        WorkloadModel _selectedWorkload;
 
-        CommandBase _getWorkloads;
+        ICommand _getWorkloads, _setSelectedWorkload;
 
         public WorkloadViewModel() : base(TITLE, DESCRIPTION)
         {
-            _workloads = new List<WorkloadModel>();
+            
         }
 
         #region properties
 
         public IList<WorkloadModel> Workloads
         {
-            get { return _workloads; }
-            private set { Set(nameof(Workloads), ref _workloads, value); }
+            get { return Bootstrapper.Instance.Workloads; }
+        }
+
+        public WorkloadModel SelectedWorkload
+        {
+            get { return _selectedWorkload; }
+            private set { Set(nameof(SelectedWorkload), ref _selectedWorkload, value); }
         }
 
         #endregion
@@ -39,41 +41,34 @@ namespace VsDownloader.ViewModels
             get
             {
                 if (_getWorkloads == null)
-                    _getWorkloads = new RelayCommand<int, IList<WorkloadModel>>(GetWorkloads, GetWorkloadsCallback);
+                    _getWorkloads = new RelayCommand(GetWorkloads);
 
                 return _getWorkloads;
             }
         }
 
-        #endregion
-
-        IList<WorkloadModel> GetWorkloads(int workloadsCount)
+        public ICommand SetSelectedWorkloadComand
         {
-            if (workloadsCount > 0)
-                return null;
-
-            var web = new HtmlWeb();
-            var document = web.Load("https://docs.microsoft.com/en-us/visualstudio/install/workload-and-component-ids");
-
-            var workloads = new List<WorkloadModel>();
-            var workloadNodes = document.DocumentNode.SelectNodes(".//table/tbody/tr");
-            foreach (var workloadNode in workloadNodes)
+            get
             {
-                var informationNodes = workloadNode.SelectNodes("./td");
-                var workload = new WorkloadModel();
-                workload.Url = string.Format("https://docs.microsoft.com/en-us/visualstudio/install/{0}", informationNodes[0].SelectSingleNode("./a[@data-linktype='relative-path']").Attributes["href"].Value);
-                workload.Name = informationNodes[0].InnerText.Replace("&nbsp;", " ");
-                workload.Id = informationNodes[1].InnerText;
-                workload.Description = informationNodes[2].InnerText;
-                workloads.Add(workload);
+                if (_setSelectedWorkload == null)
+                    _setSelectedWorkload = new RelayCommand<WorkloadModel>(SetSelectedWorkload) { IsSynchronous = true };
+
+                return _setSelectedWorkload;
             }
-            return workloads;
         }
 
-        void GetWorkloadsCallback(IList<WorkloadModel> workloads)
+        #endregion
+
+        void GetWorkloads()
         {
-            if (workloads != null)
-                Workloads = workloads;
+            Bootstrapper.Instance.GetWorkloads();
+            RaisePropertyChanged(nameof(Workloads));
+        }
+
+        void SetSelectedWorkload(WorkloadModel workload)
+        {
+            SelectedWorkload = workload;
         }
 
     }

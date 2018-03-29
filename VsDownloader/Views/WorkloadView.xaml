@@ -19,10 +19,19 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
-        <ListBox ItemsSource="{Binding Path=Workloads, Mode=OneWay}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding Path=Workloads, Mode=OneWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <RadioButton IsChecked="{Binding Path=IsSelected, Mode=TwoWay}">
+                    <RadioButton GroupName="Workloads" IsChecked="{Binding Path=IsSelected, Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseMove">
+                                <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=ListBox, AncestorLevel=1}, Path=DataContext.SetSelectedWorkloadComand}" CommandParameter="{Binding}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <RadioButton.Content>
                             <TextBlock Text="{Binding Path=Name, Mode=OneTime}" />
                         </RadioButton.Content>
@@ -30,5 +39,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <TextBlock
+            Grid.Row="1"
+            Text="{Binding Path=SelectedWorkload.Description, Mode=OneWay, FallbackValue='Hover over a workload from the list above to see its details.'}"
+            TextWrapping="Wrap" />
     </Grid>
 </UserControl>

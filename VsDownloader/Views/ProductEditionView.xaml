@@ -18,7 +18,7 @@
         <ListBox ItemsSource="{Binding Path=ProductEditions, Mode=OneWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <RadioButton IsChecked="{Binding Path=IsSelected, Mode=TwoWay}">
+                    <RadioButton GroupName="Editions" IsChecked="{Binding Path=IsSelected, Mode=TwoWay}">
                         <RadioButton.Content>
                             <TextBlock Text="{Binding Path=Name, Mode=OneTime}" />
                         </RadioButton.Content>

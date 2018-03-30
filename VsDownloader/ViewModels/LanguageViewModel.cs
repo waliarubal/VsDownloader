@@ -8,7 +8,7 @@ namespace VsDownloader.ViewModels
     class LanguageViewModel: WizardPageBase
     {
         const string TITLE = "Language";
-        const string DESCRIPTION = "Select language(s) which you want to download.";
+        const string DESCRIPTION = "Select language locale(s) which you want to download.";
 
         ICommand _getLanguages;
 
@@ -45,6 +45,17 @@ namespace VsDownloader.ViewModels
         {
             Bootstrapper.Instance.GetLanguages();
             RaisePropertyChanged(nameof(Languages));  
+        }
+
+        public override bool Validate(out string errorMessage)
+        {
+            errorMessage = null;
+            foreach (var language in Languages)
+                if (language.IsSelected)
+                    return true;
+
+            errorMessage = "No language selected. Please select at least one language locale.";
+            return false;
         }
     }
 }

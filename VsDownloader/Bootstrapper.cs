@@ -63,6 +63,8 @@ namespace VsDownloader
             private set { _workloads = value; }
         }
 
+        public string Path { get; set; }
+
         #endregion
 
         public void GetProductEditions()

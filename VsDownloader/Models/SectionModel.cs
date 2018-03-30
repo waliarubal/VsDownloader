@@ -14,6 +14,8 @@ namespace VsDownloader.Models
             _components = new List<ComponentModel>();
         }
 
+        #region properties
+
         public string Id
         {
             get { return _id; }
@@ -38,9 +40,16 @@ namespace VsDownloader.Models
             set { Set(nameof(IsSelected), ref _isSelected, value); }
         }
 
+        #endregion
+
         public IList<ComponentModel> Components
         {
             get { return _components; }
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

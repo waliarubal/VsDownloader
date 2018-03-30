@@ -20,21 +20,46 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
         <TreeView ItemsSource="{Binding Path=Workloads, Mode=OneWay}">
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type m:WorkloadModel}" ItemsSource="{Binding Path=Sections, Mode=OneWay}">
-                    <TextBlock Text="{Binding Path=Name, Mode=OneTime}" />
+                    <TextBlock Text="{Binding Path=Name, Mode=OneTime}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseMove">
+                                <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=TreeView, AncestorLevel=1}, Path=DataContext.SetDetailsComand}" CommandParameter="{Binding Path=Description, Mode=OneWay}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBlock>
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type m:SectionModel}" ItemsSource="{Binding Path=Components, Mode=OneWay}">
-                    <TextBlock Text="{Binding Path=Name, Mode=OneTime}" />
+                    <TextBlock Text="{Binding Path=Name, Mode=OneTime}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseMove">
+                                <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=TreeView, AncestorLevel=1}, Path=DataContext.SetDetailsComand}" CommandParameter="{Binding Path=Description, Mode=OneWay}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBlock>
                 </HierarchicalDataTemplate>
                 <DataTemplate DataType="{x:Type m:ComponentModel}">
                     <StackPanel Orientation="Horizontal">
                         <CheckBox IsChecked="{Binding Path=IsSelected, Mode=TwoWay}" IsEnabled="{Binding Path=IsNotRequired, Mode=OneTime}" />
                         <TextBlock Text="{Binding Path=Name, Mode=OneTime}" />
+                        <TextBlock
+                            FontWeight="Thin"
+                            Foreground="Gray"
+                            Text="{Binding Path=Version, Mode=OneWay, StringFormat=' Version {0}'}" />
                     </StackPanel>
                 </DataTemplate>
             </TreeView.Resources>
         </TreeView>
+        <TextBlock
+            Grid.Row="1"
+            Text="{Binding Path=Details, Mode=OneWay}"
+            TextWrapping="Wrap" />
     </Grid>
 </UserControl>

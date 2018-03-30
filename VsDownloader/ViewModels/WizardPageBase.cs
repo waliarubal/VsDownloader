@@ -32,5 +32,7 @@ namespace VsDownloader.ViewModels
         }
 
         #endregion
+
+        public abstract bool Validate(out string errorMessage);
     }
 }

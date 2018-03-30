@@ -71,5 +71,15 @@ namespace VsDownloader.ViewModels
             SelectedWorkload = workload;
         }
 
+        public override bool Validate(out string errorMessage)
+        {
+            errorMessage = null;
+            foreach (var workload in Workloads)
+                if (workload.IsSelected)
+                    return true;
+
+            errorMessage = "No Visual Studio workload selected. Please select at least one workload.";
+            return false;
+        }
     }
 }

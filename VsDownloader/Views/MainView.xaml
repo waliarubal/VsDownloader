@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:VsDownloader.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:VsDownloader.ViewModels"
-    Title="MainView"
+    Title="Visual Studio Downloader"
     Width="480"
     Height="640"
     mc:Ignorable="d">
@@ -25,6 +25,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock FontWeight="Bold" Text="{Binding Path=Page.Title, Mode=OneWay, FallbackValue='Title'}" />
         <TextBlock
@@ -32,10 +33,14 @@
             Text="{Binding Path=Page.Description, Mode=OneWay, FallbackValue='Description'}"
             TextWrapping="Wrap" />
         <ContentPresenter Grid.Row="2" Content="{Binding Path=PageView, Mode=OneWay}" />
-        <StackPanel Grid.Row="3" Orientation="Horizontal">
+        <TextBlock
+            Grid.Row="3"
+            Foreground="Red"
+            Text="{Binding Path=ErrorMessage, Mode=OneWay}"
+            TextWrapping="Wrap" />
+        <StackPanel Grid.Row="4" Orientation="Horizontal">
             <Button Command="{Binding Path=PreviousCommand, Mode=OneTime}" Content="Back" />
             <Button Command="{Binding Path=NextCommand, Mode=OneTime}" Content="Next" />
-            <Button Content="Finish" />
             <Button Content="Cancel" />
         </StackPanel>
     </Grid>

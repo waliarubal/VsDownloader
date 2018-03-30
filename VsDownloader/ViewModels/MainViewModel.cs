@@ -13,6 +13,7 @@ namespace VsDownloader.ViewModels
         WizardPageBase _page;
         Control _pageView;
         int _index;
+        string _errorMessage;
 
         CommandBase _next, _previous, _first;
 
@@ -47,6 +48,12 @@ namespace VsDownloader.ViewModels
         {
             get { return _page; }
             private set { Set(nameof(Page), ref _page, value); }
+        }
+
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            private set { Set(nameof(ErrorMessage), ref _errorMessage, value); }
         }
 
         #endregion
@@ -90,6 +97,16 @@ namespace VsDownloader.ViewModels
 
         void Next()
         {
+            // validation
+            string errorMessage;
+            if (Page != null && !Page.Validate(out errorMessage))
+            {
+                ErrorMessage = errorMessage;
+                return;
+            }
+            else
+                ErrorMessage = null;
+
             if (_index < Pages.Count - 1)
                 _index++;
 

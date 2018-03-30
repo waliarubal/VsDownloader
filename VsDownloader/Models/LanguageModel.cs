@@ -7,6 +7,8 @@ namespace VsDownloader.Models
         string _locale, _name;
         bool _isSelected;
 
+        #region properties
+
         public string Locale
         {
             get { return _locale; }
@@ -23,6 +25,13 @@ namespace VsDownloader.Models
         {
             get { return _isSelected; }
             set { Set(nameof(IsSelected), ref _isSelected, value); }
+        }
+
+        #endregion
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

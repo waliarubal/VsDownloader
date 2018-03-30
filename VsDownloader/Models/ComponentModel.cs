@@ -17,6 +17,8 @@ namespace VsDownloader.Models
         DependencyType _dependencyType;
         Version _version;
 
+        #region properties
+
         public DependencyType Type
         {
             get { return _dependencyType; }
@@ -54,6 +56,13 @@ namespace VsDownloader.Models
         public bool IsNotRequired
         {
             get { return Type != DependencyType.Required; }
+        }
+
+        #endregion
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

@@ -15,6 +15,11 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding Path=ProductEditions, Mode=OneWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -26,5 +31,15 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <TextBlock Grid.Row="1" Text="Download Directory:" />
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox Text="{Binding Path=Path, Mode=TwoWay}" />
+            <Button Grid.Column="1" Content="..." />
+        </Grid>
+
     </Grid>
 </UserControl>

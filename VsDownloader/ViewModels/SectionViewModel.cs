@@ -10,9 +10,9 @@ namespace VsDownloader.ViewModels
         const string TITLE = "Components";
         const string DESCRIPTION = "Select component(s) which you want to download.";
 
-        SectionModel _selectedSection;
+        string _details;
 
-        ICommand _getSections, _setSelectedSection;
+        ICommand _getSections, _setDetails;
 
         public SectionViewModel() : base(TITLE, DESCRIPTION)
         {
@@ -26,10 +26,10 @@ namespace VsDownloader.ViewModels
             get { return Bootstrapper.Instance.Workloads; }
         }
 
-        public SectionModel SelectedSection
+        public string Details
         {
-            get { return _selectedSection; }
-            private set { Set(nameof(SelectedSection), ref _selectedSection, value); }
+            get { return _details; }
+            private set { Set(nameof(Details), ref _details, value); }
         }
 
         #endregion
@@ -47,14 +47,14 @@ namespace VsDownloader.ViewModels
             }
         }
 
-        public ICommand SetSelectedSectionComand
+        public ICommand SetDetailsComand
         {
             get
             {
-                if (_setSelectedSection == null)
-                    _setSelectedSection = new RelayCommand<SectionModel>(SetSelectedSection) { IsSynchronous = true };
+                if (_setDetails == null)
+                    _setDetails = new RelayCommand<string>(SetDetails) { IsSynchronous = true };
 
-                return _setSelectedSection;
+                return _setDetails;
             }
         }
 
@@ -68,10 +68,15 @@ namespace VsDownloader.ViewModels
             RaisePropertyChanged(nameof(Workloads));
         }
 
-        void SetSelectedSection(SectionModel section)
+        void SetDetails(string details)
         {
-            SelectedSection = section;
+            Details = details;
         }
 
+        public override bool Validate(out string errorMessage)
+        {
+            errorMessage = null;
+            return true;
+        }
     }
 }

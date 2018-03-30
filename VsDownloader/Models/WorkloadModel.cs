@@ -14,6 +14,8 @@ namespace VsDownloader.Models
             _sections = new List<SectionModel>();
         }
 
+        #region properties
+
         public string Url
         {
             get { return _bootstrapperUrl; }
@@ -51,12 +53,19 @@ namespace VsDownloader.Models
             set { Set(nameof(IsSelected), ref _isSelected, value); }
         }
 
+        #endregion
+
         public void GetSections()
         {
             if (Sections.Count > 0)
                 return;
 
             Sections = Bootstrapper.Instance.GetSections(this);
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

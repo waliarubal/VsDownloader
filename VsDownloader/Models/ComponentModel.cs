@@ -20,7 +20,11 @@ namespace VsDownloader.Models
         public DependencyType Type
         {
             get { return _dependencyType; }
-            set { Set(nameof(Type), ref _dependencyType, value); }
+            set
+            {
+                Set(nameof(Type), ref _dependencyType, value);
+                IsSelected = value == DependencyType.Required || value == DependencyType.Recommended;
+            }
         }
 
         public string Name
@@ -45,6 +49,11 @@ namespace VsDownloader.Models
         {
             get { return _isSelected; }
             set { Set(nameof(IsSelected), ref _isSelected, value); }
+        }
+
+        public bool IsNotRequired
+        {
+            get { return Type != DependencyType.Required; }
         }
     }
 }

@@ -28,7 +28,8 @@ namespace VsDownloader.ViewModels
                     {
                         new ProductEditionViewModel(),
                         new LanguageViewModel(),
-                        new WorkloadViewModel()
+                        new WorkloadViewModel(),
+                        new SectionViewModel()
                     };
                 }
 

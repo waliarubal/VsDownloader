@@ -1,0 +1,40 @@
+﻿<UserControl
+    x:Class="VsDownloader.Views.SectionView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:VsDownloader.Views"
+    xmlns:m="clr-namespace:VsDownloader.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:VsDownloader.ViewModels"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <UserControl.DataContext>
+        <vm:SectionViewModel />
+    </UserControl.DataContext>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Path=GetSectionsCommand, Mode=OneTime}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <TreeView ItemsSource="{Binding Path=Workloads, Mode=OneWay}">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type m:WorkloadModel}" ItemsSource="{Binding Path=Sections, Mode=OneWay}">
+                    <TextBlock Text="{Binding Path=Name, Mode=OneTime}" />
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type m:SectionModel}" ItemsSource="{Binding Path=Components, Mode=OneWay}">
+                    <TextBlock Text="{Binding Path=Name, Mode=OneTime}" />
+                </HierarchicalDataTemplate>
+                <DataTemplate DataType="{x:Type m:ComponentModel}">
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding Path=IsSelected, Mode=TwoWay}" IsEnabled="{Binding Path=IsNotRequired, Mode=OneTime}" />
+                        <TextBlock Text="{Binding Path=Name, Mode=OneTime}" />
+                    </StackPanel>
+                </DataTemplate>
+            </TreeView.Resources>
+        </TreeView>
+    </Grid>
+</UserControl>

@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>VsDownloader.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="HtmlAgilityPack, Version=1.7.2.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.7.2\lib\Net40\HtmlAgilityPack.dll</HintPath>
@@ -84,6 +87,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ProductEditionViewModel.cs" />
     <Compile Include="ViewModels\WizardPageBase.cs" />
+    <Compile Include="ViewModels\SectionViewModel.cs" />
     <Compile Include="Views\LanguageView.xaml.cs">
       <DependentUpon>LanguageView.xaml</DependentUpon>
     </Compile>
@@ -92,6 +96,9 @@
     </Compile>
     <Compile Include="Views\ProductEditionView.xaml.cs">
       <DependentUpon>ProductEditionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SectionView.xaml.cs">
+      <DependentUpon>SectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WorkloadView.xaml.cs">
       <DependentUpon>WorkloadView.xaml</DependentUpon>
@@ -132,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProductEditionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

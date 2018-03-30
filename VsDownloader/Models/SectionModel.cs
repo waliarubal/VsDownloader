@@ -1,4 +1,5 @@
 ﻿using NullVoidCreations.WpfHelpers.Base;
+using System.Collections.Generic;
 
 namespace VsDownloader.Models
 {
@@ -6,6 +7,12 @@ namespace VsDownloader.Models
     {
         string _id, _name, _description;
         bool _isSelected;
+        readonly IList<ComponentModel> _components;
+
+        public SectionModel()
+        {
+            _components = new List<ComponentModel>();
+        }
 
         public string Id
         {
@@ -29,6 +36,11 @@ namespace VsDownloader.Models
         {
             get { return _isSelected; }
             set { Set(nameof(IsSelected), ref _isSelected, value); }
+        }
+
+        public IList<ComponentModel> Components
+        {
+            get { return _components; }
         }
     }
 }

@@ -136,8 +136,49 @@ namespace VsDownloader
 
             var sections = new List<SectionModel>();
 
-            var sectionNodes = document.DocumentNode.SelectNodes(".//h2[string-length(@id) > 0]/following-sibling::p/strong");
+            var sectionNodes = document.DocumentNode.SelectNodes(".//h2[@id and following::p/strong]");
+            foreach(var sectionNode in sectionNodes)
+            {
+                var section = new SectionModel();
+                section.Name = sectionNode.InnerText;
 
+                var tempNode = sectionNode.SelectSingleNode("following::p[child::strong]");
+                section.Id = tempNode.LastChild.InnerText;
+
+                tempNode = tempNode.SelectSingleNode("following::p[child::strong]");
+                section.Description = tempNode.LastChild.InnerText;
+
+                tempNode = tempNode.SelectSingleNode("following::table/tbody");
+                foreach(var componentNode in tempNode.SelectNodes("./tr"))
+                {
+                    var dataNode = componentNode.SelectNodes("./td");
+
+                    var component = new ComponentModel();
+                    component.Id = dataNode[0].InnerText;
+                    component.Name = dataNode[1].InnerText;
+                    component.Version = Version.Parse(dataNode[2].InnerText);
+
+                    var type = dataNode[3].InnerText;
+                    switch(type)
+                    {
+                        case "Recommended":
+                            component.Type = ComponentModel.DependencyType.Recommended;
+                            break;
+
+                        case "Optional":
+                            component.Type = ComponentModel.DependencyType.Optional;
+                            break;
+
+                        case "Required":
+                            component.Type = ComponentModel.DependencyType.Required;
+                            break;
+                    }
+
+                    section.Components.Add(component);
+                }
+
+                sections.Add(section);
+            }
             return sections;
         }
     }

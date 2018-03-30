@@ -26,22 +26,22 @@
         <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding Path=Workloads, Mode=OneWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <RadioButton GroupName="Workloads" IsChecked="{Binding Path=IsSelected, Mode=TwoWay}">
+                    <CheckBox IsChecked="{Binding Path=IsSelected, Mode=TwoWay}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseMove">
                                 <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=ListBox, AncestorLevel=1}, Path=DataContext.SetSelectedWorkloadComand}" CommandParameter="{Binding}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                        <RadioButton.Content>
+                        <CheckBox.Content>
                             <TextBlock Text="{Binding Path=Name, Mode=OneTime}" />
-                        </RadioButton.Content>
-                    </RadioButton>
+                        </CheckBox.Content>
+                    </CheckBox>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <TextBlock
             Grid.Row="1"
-            Text="{Binding Path=SelectedWorkload.Description, Mode=OneWay, FallbackValue='Hover over a workload from the list above to see its details.'}"
+            Text="{Binding Path=SelectedWorkload.Description, Mode=OneWay, FallbackValue='Hover over a workload to see its details.'}"
             TextWrapping="Wrap" />
     </Grid>
 </UserControl>

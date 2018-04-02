@@ -37,8 +37,11 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBox Text="{Binding Path=Path, Mode=TwoWay}" />
-            <Button Grid.Column="1" Content="..." />
+            <TextBox Text="{Binding Path=DownloadDirectory, Mode=TwoWay}" />
+            <Button
+                Grid.Column="1"
+                Command="{Binding Path=SelectDownloadDirectoryCommand, Mode=OneTime}"
+                Content="..." />
         </Grid>
 
     </Grid>

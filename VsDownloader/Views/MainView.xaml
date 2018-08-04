@@ -8,8 +8,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:VsDownloader.ViewModels"
     Title="Visual Studio Downloader"
-    Width="480"
-    Height="640"
+    Width="640"
+    Height="480"
     mc:Ignorable="d">
     <Window.DataContext>
         <vm:MainViewModel />

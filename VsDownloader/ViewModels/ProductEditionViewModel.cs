@@ -1,4 +1,5 @@
-﻿using NullVoidCreations.WpfHelpers.Commands;
+﻿using NullVoidCreations.WpfHelpers;
+using NullVoidCreations.WpfHelpers.Commands;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Input;
@@ -6,18 +7,18 @@ using VsDownloader.Models;
 
 namespace VsDownloader.ViewModels
 {
-    class ProductEditionViewModel: WizardPageBase
+    class ProductEditionViewModel : WizardPageBase
     {
         const string TITLE = "Product Edition";
         const string DESCRIPTION = "Select download directory and the edition of Visual Studio which you want to download.";
 
-        string _path;
+        string _downloadDirectory;
 
-        ICommand _getProductEditions;
+        ICommand _getProductEditions, _selectDownloadDirectory;
 
-        public ProductEditionViewModel(): base(TITLE, DESCRIPTION)
+        public ProductEditionViewModel() : base(TITLE, DESCRIPTION)
         {
-            
+
         }
 
         #region properties
@@ -27,13 +28,13 @@ namespace VsDownloader.ViewModels
             get { return Bootstrapper.Instance.ProductEditions; }
         }
 
-        public string Path
+        public string DownloadDirectory
         {
-            get { return Bootstrapper.Instance.Path; }
+            get { return _downloadDirectory; }
             set
             {
-                if(Set(nameof(Path), ref _path, value))
-                    Bootstrapper.Instance.Path = _path;
+                if (Set(nameof(DownloadDirectory), ref _downloadDirectory, value))
+                    Bootstrapper.Instance.DownloadDirectory = _downloadDirectory;
             }
         }
 
@@ -52,12 +53,30 @@ namespace VsDownloader.ViewModels
             }
         }
 
+        public ICommand SelectDownloadDirectoryCommand
+        {
+            get
+            {
+                if (_selectDownloadDirectory == null)
+                    _selectDownloadDirectory = new RelayCommand(SelectDownloadDirectory) { IsSynchronous = true };
+
+                return _selectDownloadDirectory;
+            }
+        }
+
         #endregion
 
         void GetProductEditions()
         {
             Bootstrapper.Instance.GetProductEditions();
             RaisePropertyChanged(nameof(ProductEditions));
+        }
+
+        void SelectDownloadDirectory()
+        {
+            var path = new PlatformInvoke().SelectFolder("Select directory where you want to download installer files.");
+            if (!string.IsNullOrEmpty(path))
+                DownloadDirectory = path;
         }
 
         public override bool Validate(out string errorMessage)
@@ -78,14 +97,14 @@ namespace VsDownloader.ViewModels
                 errorMessage = "No Visual Studio edition selected. Please select Visual Studio edition which you want to download.";
                 return flag;
             }
-            
-            if (string.IsNullOrEmpty(Path))
+
+            if (string.IsNullOrEmpty(DownloadDirectory))
             {
                 errorMessage = "Download directoty not specified. Please select directory where you want installer files to be downloaded.";
                 return false;
             }
 
-            if (!Directory.Exists(Path))
+            if (!Directory.Exists(DownloadDirectory))
             {
                 errorMessage = "Download directoty does not exist. Please select a valid directory where you want installer files to be downloaded.";
                 return false;
